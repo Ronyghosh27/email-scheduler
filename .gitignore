@@ -1,0 +1,31 @@
+
+
+/generated/prisma
+# Dependencies
+node_modules/
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Build files
+dist/
+coverage/
+
+# Operating system
+.DS_Store
+Thumbs.db
+
+# AI development tool configurations
+.agents/
+.claude/
+.windsurf/
+
+# Development tool files
+skills-lock.json
