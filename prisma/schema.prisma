@@ -10,6 +10,7 @@ datasource db {
 
 enum EmailStatus {
   SCHEDULED
+  PROCESSING
   SENT
   FAILED
 }
@@ -20,6 +21,10 @@ model User {
   email     String   @unique
   googleId  String?  @unique
   createdAt DateTime @default(now())
+
+  gmailEmail                String?
+gmailRefreshTokenEncrypted String?
+gmailConnectedAt          DateTime?
 
   emails    Email[]
 }

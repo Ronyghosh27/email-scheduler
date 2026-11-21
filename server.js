@@ -8,6 +8,7 @@ import passport from "./config/passport.js";
 import authRoutes from "./routes/authRoutes.js";
 import pg from "pg";
 import connectPgSimple from "connect-pg-simple";
+import gmailRoutes from "./routes/gmailRoutes.js";
 
 const { Pool } = pg;
 
@@ -47,7 +48,7 @@ app.use(passport.session());
 // Email routes
 app.use("/api/emails", emailRoutes);
 app.use("/auth", authRoutes);
-
+app.use("/auth/gmail", gmailRoutes);
 // Home route
 app.get("/", (req, res) => {
     res.send("Welcome to Email Scheduler Backend!");
