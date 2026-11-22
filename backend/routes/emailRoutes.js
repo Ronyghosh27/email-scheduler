@@ -1,5 +1,5 @@
 import express from "express";
-import { createEmail,getEmails,updateEmail,deleteEmail} from "../controllers/emailController.js";
+import { createEmail,getEmails,searchEmails,getEmailById,updateEmail,deleteEmail,bulkDeleteSentEmails} from "../controllers/emailController.js";
 
 const router = express.Router();
 
@@ -15,7 +15,10 @@ router.use((req, res, next) => {
 });
 
 router.post("/", createEmail);
+router.post("/bulk-delete", bulkDeleteSentEmails);
+router.get("/search", searchEmails);
 router.get("/", getEmails);
+router.get("/:id", getEmailById);
 router.put("/:id", updateEmail);
 router.delete("/:id", deleteEmail);
 

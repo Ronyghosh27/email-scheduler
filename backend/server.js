@@ -9,6 +9,7 @@ import authRoutes from "./routes/authRoutes.js";
 import pg from "pg";
 import connectPgSimple from "connect-pg-simple";
 import gmailRoutes from "./routes/gmailRoutes.js";
+import cors from "cors";
 
 const { Pool } = pg;
 
@@ -23,6 +24,12 @@ const app = express();
 const PORT = 5000;
 
 // Middleware
+// Middleware
+app.use(cors({
+    origin: "http://localhost:5173",
+    credentials: true
+}));
+
 app.use(express.json());
 app.use(
     session({
@@ -34,8 +41,9 @@ app.use(
         resave: false,
         saveUninitialized: false,
         cookie: {
-            secure: false,
+            secure: process.env.NODE_ENV === "production",
             httpOnly: true,
+            sameSite: "lax",
             maxAge: 24 * 60 * 60 * 1000
         }
     })
@@ -64,9 +72,20 @@ app.get("/api/status", (req, res) => {
 });
 
 app.get("/auth/me", (req, res) => {
+    if (!req.isAuthenticated()) {
+        return res.json({
+            isAuthenticated: false,
+            user: null
+        });
+    }
+
     res.json({
-        isAuthenticated: req.isAuthenticated(),
-        user: req.user
+        isAuthenticated: true,
+        user: {
+            id: req.user.id,
+            name: req.user.name,
+            email: req.user.email
+        }
     });
 });
 

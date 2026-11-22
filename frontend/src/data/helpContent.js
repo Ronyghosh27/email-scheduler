@@ -1,0 +1,275 @@
+export const helpCategories = [
+  {
+    id: 'getting-started',
+    title: 'Getting started',
+    description: 'Set up MailFlow and connect Gmail.',
+  },
+  {
+    id: 'managing-emails',
+    title: 'Managing emails',
+    description: 'Schedule, review, search, and manage email activity.',
+  },
+  {
+    id: 'troubleshooting',
+    title: 'Troubleshooting',
+    description: 'Resolve common login, Gmail, scheduling, and search issues.',
+  },
+]
+
+export const helpArticles = [
+  {
+    id: 'what-is-mailflow',
+    category: 'getting-started',
+    title: 'What is MailFlow?',
+    description: 'Learn what MailFlow helps you manage and schedule.',
+    content: [
+      { heading: 'MailFlow overview', paragraphs: ['MailFlow is an email scheduling dashboard that lets you sign in with Google, connect Gmail, schedule emails for a future date and time, and review email status.'] },
+      { heading: 'What you can do', list: ['Compose and schedule emails.', 'View scheduled, sent, failed, and recent email records.', 'Edit or cancel emails that are still scheduled.', 'Delete MailFlow records for sent emails without deleting the Gmail copy.'] },
+    ],
+  },
+  {
+    id: 'sign-in-google',
+    category: 'getting-started',
+    title: 'How to sign in with Google',
+    description: 'Use Google authentication to access your MailFlow workspace.',
+    content: [
+      { heading: 'Sign in', paragraphs: ['Open MailFlow and use the Google sign-in option on the login page.'], list: ['Choose the Google account you want to use.', 'Complete Google authentication.', 'After authentication succeeds, MailFlow opens the dashboard.'] },
+    ],
+  },
+  {
+    id: 'connect-gmail',
+    category: 'getting-started',
+    title: 'How to connect Gmail',
+    description: 'Connect your Gmail account before scheduling emails.',
+    content: [
+      { heading: 'Connect Gmail', paragraphs: ['MailFlow requires an active Gmail connection before you can schedule an email.'], list: ['Open Settings from the sidebar.', 'Find the Gmail Integration section.', 'Choose Connect Gmail.', 'Complete the Google connection flow.'] },
+      { heading: 'Confirm the connection', paragraphs: ['When setup succeeds, the settings page shows the connected Gmail address.'] },
+    ],
+  },
+  {
+    id: 'compose-email',
+    category: 'getting-started',
+    title: 'How to compose an email',
+    description: 'Create a new email from the Compose Email action.',
+    content: [
+      { heading: 'Open the composer', paragraphs: ['Choose Compose Email from the Header.'], list: ['Enter the recipient email address.', 'Add a subject.', 'Write the email message.'] },
+    ],
+  },
+  {
+    id: 'schedule-email',
+    category: 'getting-started',
+    title: 'How to schedule an email',
+    description: 'Choose a future delivery date and send it through MailFlow.',
+    content: [
+      { heading: 'Schedule the email', list: ['Open Compose Email.', 'Enter the recipient, subject, and message.', 'Choose a future scheduled date and time.', 'Submit the form to schedule it.'] },
+      { heading: 'Before scheduling', paragraphs: ['Gmail must be connected, and the selected date and time must be in the future.'] },
+    ],
+  },
+  {
+    id: 'choose-delivery-time',
+    category: 'getting-started',
+    title: 'How to choose a scheduled delivery date and time',
+    description: 'Select a valid future time for email delivery.',
+    content: [
+      { heading: 'Choose a future time', paragraphs: ['The scheduler accepts a local date and time. The application converts it before saving it.'], list: ['Review the recipient, subject, and message.', 'Select a date and time later than the current time.', 'Schedule the email.'] },
+      { heading: 'If the time is rejected', paragraphs: ['Choose a future date and time and submit again. Past dates and invalid dates are not accepted.'] },
+    ],
+  },
+  {
+    id: 'disconnect-gmail',
+    category: 'getting-started',
+    title: 'How to disconnect Gmail',
+    description: 'Remove the Gmail integration from MailFlow settings.',
+    content: [
+      { heading: 'Disconnect Gmail', list: ['Open Settings.', 'Find the Gmail Integration section.', 'Choose Disconnect Gmail.', 'Confirm the existing disconnect prompt.'] },
+      { heading: 'After disconnecting', paragraphs: ['New scheduled email requests require Gmail to be connected again.'] },
+    ],
+  },
+  {
+    id: 'understand-dashboard',
+    category: 'managing-emails',
+    title: 'Understanding the Dashboard',
+    description: 'Understand email totals and the recent email list.',
+    content: [
+      { heading: 'Dashboard statistics', paragraphs: ['The dashboard summarizes email records currently returned for your account, including total, scheduled, sent, and failed email counts.'] },
+      { heading: 'Recent emails', paragraphs: ['The Recent Emails section lists email activity returned by MailFlow for the dashboard view.'] },
+    ],
+  },
+  {
+    id: 'view-scheduled',
+    category: 'managing-emails',
+    title: 'How to view scheduled emails',
+    description: 'Open the Scheduled emails page from the sidebar.',
+    content: [{ heading: 'View scheduled emails', list: ['Choose Scheduled in the sidebar.', 'Review emails with the Scheduled status.', 'Use the row actions to edit or cancel an eligible scheduled email.'] }],
+  },
+  {
+    id: 'edit-scheduled',
+    category: 'managing-emails',
+    title: 'How to edit scheduled emails',
+    description: 'Change a scheduled email while it is still eligible.',
+    content: [
+      { heading: 'Edit a scheduled email', list: ['Open Scheduled emails.', 'Choose the edit icon for the email.', 'Update recipient, subject, message, or future delivery time.', 'Submit the updated schedule.'] },
+      { heading: 'If editing is unavailable', paragraphs: ['Scheduled emails can only be edited while they remain eligible for rescheduling.'] },
+    ],
+  },
+  {
+    id: 'cancel-scheduled',
+    category: 'managing-emails',
+    title: 'How to cancel scheduled emails',
+    description: 'Cancel an email that is still waiting to be sent.',
+    content: [{ heading: 'Cancel a scheduled email', list: ['Open Scheduled emails or find the scheduled row on the dashboard.', 'Choose the trash icon.', 'Confirm the cancellation.'] }, { heading: 'What happens', paragraphs: ['MailFlow removes the scheduled database record and its existing queue job when cancellation succeeds.'] }],
+  },
+  {
+    id: 'view-sent',
+    category: 'managing-emails',
+    title: 'How to view sent emails',
+    description: 'Review emails that were successfully sent.',
+    content: [{ heading: 'View sent emails', list: ['Choose Sent emails in the sidebar.', 'Review rows with the Sent status.', 'Open an email row to read its complete details.'] }],
+  },
+  {
+    id: 'view-failed',
+    category: 'managing-emails',
+    title: 'How to view failed emails',
+    description: 'Review failed delivery records and their reasons.',
+    content: [{ heading: 'View failed emails', list: ['Choose Failed emails in the sidebar.', 'Open a failed email row to review it.', 'Read the failure reason shown with the email when available.'] }],
+  },
+  {
+    id: 'email-details',
+    category: 'managing-emails',
+    title: 'How to open and read complete email details',
+    description: 'Open any email record to view its complete message.',
+    content: [{ heading: 'Open email details', paragraphs: ['Click a row in Recent Emails, Sent, Scheduled, or Failed.'], list: ['MailFlow opens the Email Detail View.', 'Review the subject, recipient, sender, status, dates, failure reason, and complete message.', 'Choose Back to return to the previous page and filters.'] }],
+  },
+  {
+    id: 'delete-sent',
+    category: 'managing-emails',
+    title: 'How to delete sent emails',
+    description: 'Remove an email record from MailFlow without deleting Gmail.',
+    content: [{ heading: 'Delete a sent email', list: ['Open Sent Emails or a Recent Emails row.', 'Choose the trash icon for the sent email.', 'Confirm deletion in the Delete email modal.'] }, { heading: 'Gmail remains unchanged', paragraphs: ['This deletes only the MailFlow database record. It does not delete the actual email from your Gmail Sent folder.'] }],
+  },
+  {
+    id: 'select-multiple',
+    category: 'managing-emails',
+    title: 'How to select multiple emails',
+    description: 'Use Sent Emails checkboxes to select records.',
+    content: [{ heading: 'Select emails', list: ['Open Sent Emails.', 'Select one or more individual checkboxes.', 'Use Select all to select every sent email in the displayed list.', 'The selected count appears above the table.'] }],
+  },
+  {
+    id: 'delete-multiple',
+    category: 'managing-emails',
+    title: 'How to delete multiple emails',
+    description: 'Delete several sent email records together.',
+    content: [{ heading: 'Bulk delete sent emails', list: ['Open Sent Emails.', 'Select the sent emails you want to remove.', 'Choose Delete Selected.', 'Review the count in the confirmation modal and confirm.'] }, { heading: 'Safety behavior', paragraphs: ['Bulk deletion is limited to sent emails. Scheduled and failed emails are not selectable for bulk deletion, and Gmail Sent-folder messages remain unchanged.'] }],
+  },
+  {
+    id: 'refresh-data',
+    category: 'managing-emails',
+    title: 'How to refresh email data',
+    description: 'Fetch the latest email records without reloading the browser.',
+    content: [{ heading: 'Refresh from the Header', list: ['Choose the Refresh button in the Header.', 'Wait for the loading indicator to finish.', 'Dashboard totals and email lists update from the backend.'] }, { heading: 'If refreshing fails', paragraphs: ['An error message appears. Use the displayed retry option after checking the application connection.'] }],
+  },
+  {
+    id: 'search-emails',
+    category: 'managing-emails',
+    title: 'How to search for emails',
+    description: 'Search all accessible email records with the Header search.',
+    content: [{ heading: 'Search MailFlow', list: ['Enter a term in Search emails...', 'Search checks subject, recipient, sender, message body, and status.', 'Matching results appear in the dropdown after a short debounce.', 'Choose a result to open the complete Email Detail View.'] }],
+  },
+  {
+    id: 'gmail-connection-problems',
+    category: 'troubleshooting',
+    title: 'Gmail connection problems',
+    description: 'Resolve a missing or unsuccessful Gmail connection.',
+    problem: 'Gmail is not connected or a schedule request says Gmail must be connected.',
+    reason: 'The Gmail connection may be missing, disconnected, or have not finished reconnecting.',
+    content: [
+      { heading: 'Steps to resolve', list: ['Open Settings.', 'Check the Gmail Integration status and connected address.', 'If it is disconnected, choose Connect Gmail.', 'Complete the Google connection flow and return to Settings.', 'Try scheduling again when Gmail shows as connected.'] },
+      { heading: 'If it still fails', paragraphs: ['Retry the connection from Settings and verify that you completed Google authorization.'] },
+    ],
+  },
+  {
+    id: 'google-login-problems',
+    category: 'troubleshooting',
+    title: 'Google login problems',
+    description: 'Troubleshoot authentication problems.',
+    problem: 'The app cannot complete Google login or reports an authentication error.',
+    reason: 'Authentication may have been cancelled, the session may be unavailable, or Google login setup may be incomplete.',
+    content: [{ heading: 'Steps to resolve', list: ['Sign in again using the Google login button.', 'Complete Google account authorization.', 'If an authentication error remains, use the Try again action or reload the login flow.', 'Make sure the browser allows third-party/session cookies if login does not persist.'] }],
+  },
+  {
+    id: 'emails-failing',
+    category: 'troubleshooting',
+    title: 'Emails failing to send',
+    description: 'Review failed status details and Gmail connection state.',
+    problem: 'An email remains in or moves to Failed status.',
+    reason: 'The sending worker can mark an email FAILED after its retry attempts are exhausted.',
+    content: [{ heading: 'Steps to resolve', list: ['Open Failed emails.', 'Open the email or read its failure reason.', 'Confirm Gmail remains connected in Settings.', 'Verify the recipient, subject, and message are valid.', 'If the failure came from sending infrastructure or Gmail, reconnect Gmail if needed and schedule a new email.'] }],
+  },
+  {
+    id: 'scheduled-not-visible',
+    category: 'troubleshooting',
+    title: 'Scheduled emails not appearing',
+    description: 'Check scheduling validation and the Scheduled page.',
+    problem: 'A newly scheduled email is missing from Scheduled emails.',
+    reason: 'A scheduling request may not have succeeded, or the email status may have changed.',
+    content: [{ heading: 'Steps to resolve', list: ['Confirm Gmail is connected.', 'Choose a future date and time.', 'Submit the compose form again and look for the success message.', 'Use Refresh in the Header.', 'Open Sent or Failed if the delivery process already changed its status.'] }],
+  },
+  {
+    id: 'refresh-not-working',
+    category: 'troubleshooting',
+    title: 'Emails not refreshing',
+    description: 'Diagnose a refresh loading or error state.',
+    problem: 'The Refresh button does not update email data or shows an error.',
+    reason: 'MailFlow may not be able to reach the backend API or the authenticated session may be unavailable.',
+    content: [{ heading: 'Steps to resolve', list: ['Wait for the current refresh request to finish.', 'Choose Try again if an error appears.', 'Verify the MailFlow frontend and backend services are running.', 'Reload the application if your login session was interrupted.'] }],
+  },
+  {
+    id: 'search-no-results',
+    category: 'troubleshooting',
+    title: 'Search not returning results',
+    description: 'Refine a MailFlow global search.',
+    problem: 'The search dropdown reports no matching emails.',
+    reason: 'The term may not match subject, recipient, sender, message body, or status, or the search may still be loading.',
+    content: [{ heading: 'Steps to resolve', list: ['Try a shorter partial term.', 'Try a recipient email, a subject word, or a message phrase.', 'Try SENT, SCHEDULED, or FAILED.', 'Wait for the search request to finish.', 'Clear the search and try again if an error is shown.'] }],
+  },
+  {
+    id: 'common-app-errors',
+    category: 'troubleshooting',
+    title: 'Other common application errors',
+    description: 'Basic checks for API, loading, and navigation issues.',
+    problem: 'Email data, details, or actions fail to load or complete.',
+    reason: 'The backend may be unavailable, the authenticated session may have ended, or the record may no longer exist.',
+    content: [{ heading: 'Steps to resolve', list: ['Use Refresh or the displayed retry action.', 'Check that you remain signed in.', 'Return to the email list and reopen the record if it was deleted or unavailable.', 'Avoid retrying a destructive action while the modal loading state is active.'] }],
+  },
+]
+
+export const helpFaqs = [
+  {
+    question: 'Can I schedule emails for a future date?',
+    answer: 'Yes. Compose an email, select a future date and time, and submit it. MailFlow rejects past or invalid delivery dates.',
+  },
+  {
+    question: 'Can I edit a scheduled email?',
+    answer: 'Yes, while the email remains eligible for rescheduling. Open Scheduled Emails and use the edit action.',
+  },
+  {
+    question: 'Can I cancel a scheduled email?',
+    answer: 'Yes. Open the Scheduled Emails page, choose the trash icon for an eligible scheduled email, and confirm cancellation.',
+  },
+  {
+    question: 'What happens when an email fails?',
+    answer: 'MailFlow records the email as FAILED and stores a failure reason when the sending worker exhausts its retry attempts.',
+  },
+  {
+    question: 'Does deleting an email from MailFlow delete it from Gmail?',
+    answer: 'No. Deletion removes only the MailFlow database record. It does not remove the actual email from your Gmail Sent folder.',
+  },
+  {
+    question: 'Can I search for old emails?',
+    answer: 'Yes. Global search searches all email records for the authenticated user that are still stored in MailFlow.',
+  },
+  {
+    question: 'How do I reconnect Gmail?',
+    answer: 'Open Settings, check Gmail Integration, and use Connect Gmail if it is disconnected. Complete the Google connection flow.',
+  },
+]

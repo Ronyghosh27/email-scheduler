@@ -128,23 +128,257 @@ export const getEmails = async (req, res) => {
 };
 
 
-export const deleteEmail = async (req, res) => {
+export const searchEmails = async (req, res) => {
+    try {
+        const rawQuery = typeof req.query.q === "string" ? req.query.q : "";
+        const query = rawQuery.trim().slice(0, 100);
+
+        if (!query) {
+            return res.status(400).json({
+                success: false,
+                message: "Enter a search term."
+            });
+        }
+
+        const normalizedQuery = query.toLowerCase();
+        const statusMatches = ["SENT", "SCHEDULED", "FAILED", "PROCESSING"].filter(
+            (status) => status.toLowerCase().includes(normalizedQuery)
+        );
+
+        const emails = await prisma.email.findMany({
+            where: {
+                userId: req.user.id,
+                OR: [
+                    { subject: { contains: normalizedQuery, mode: "insensitive" } },
+                    { recipient: { contains: normalizedQuery, mode: "insensitive" } },
+                    { message: { contains: normalizedQuery, mode: "insensitive" } },
+                    {
+                        user: {
+                            is: {
+                                OR: [
+                                    { email: { contains: normalizedQuery, mode: "insensitive" } },
+                                    { gmailEmail: { contains: normalizedQuery, mode: "insensitive" } }
+                                ]
+                            }
+                        }
+                    },
+                    ...(statusMatches.length > 0
+                        ? [{ status: { in: statusMatches } }]
+                        : [])
+                ]
+            },
+            include: {
+                user: {
+                    select: {
+                        email: true,
+                        gmailEmail: true
+                    }
+                }
+            },
+            orderBy: [
+                { updatedAt: "desc" },
+                { createdAt: "desc" }
+            ],
+            take: 20
+        });
+
+        const results = emails.map((email) => ({
+            id: email.id,
+            subject: email.subject,
+            recipient: email.recipient,
+            message: email.message,
+            status: email.status,
+            scheduledTime: email.scheduledTime,
+            createdAt: email.createdAt,
+            updatedAt: email.updatedAt,
+            senderEmail: email.user?.gmailEmail || email.user?.email || null
+        }));
+
+        res.json({
+            success: true,
+            count: results.length,
+            emails: results
+        });
+    } catch (error) {
+        console.error("Email search failed:", error);
+
+        res.status(500).json({
+            success: false,
+            message: "Failed to search emails."
+        });
+    }
+};
+
+
+export const getEmailById = async (req, res) => {
     try {
         const { id } = req.params;
 
-        // Find the email and verify ownership
         const email = await prisma.email.findFirst({
             where: {
                 id,
-                userId: req.user.id,
-                status: "SCHEDULED"
+                userId: req.user.id
+            },
+            include: {
+                user: {
+                    select: {
+                        email: true,
+                        gmailEmail: true
+                    }
+                }
             }
         });
 
         if (!email) {
             return res.status(404).json({
                 success: false,
-                message: "Scheduled email not found!"
+                message: "Email not found!"
+            });
+        }
+
+        res.json({
+            success: true,
+            email: {
+                id: email.id,
+                recipient: email.recipient,
+                subject: email.subject,
+                message: email.message,
+                scheduledTime: email.scheduledTime,
+                status: email.status,
+                createdAt: email.createdAt,
+                updatedAt: email.updatedAt,
+                failureReason: email.failureReason,
+                senderEmail: email.user?.gmailEmail || email.user?.email || null
+            }
+        });
+    } catch (error) {
+        console.error("Failed to retrieve email:", error);
+
+        res.status(500).json({
+            success: false,
+            message: "Failed to retrieve email details!"
+        });
+    }
+};
+
+
+export const bulkDeleteSentEmails = async (req, res) => {
+    try {
+        const { ids } = req.body;
+
+        if (!Array.isArray(ids) || ids.length === 0) {
+            return res.status(400).json({
+                success: false,
+                message: "Please select at least one sent email."
+            });
+        }
+
+        const uniqueIds = [...new Set(ids)].filter(
+            (id) => typeof id === "string" && id.trim().length > 0
+        );
+
+        if (uniqueIds.length === 0 || uniqueIds.length !== ids.length) {
+            return res.status(400).json({
+                success: false,
+                message: "One or more selected email IDs are invalid."
+            });
+        }
+
+        const selectedEmails = await prisma.email.findMany({
+            where: {
+                id: { in: uniqueIds },
+                userId: req.user.id
+            },
+            select: {
+                id: true,
+                status: true
+            }
+        });
+
+        if (selectedEmails.length !== uniqueIds.length) {
+            return res.status(400).json({
+                success: false,
+                message: "One or more selected emails were not found."
+            });
+        }
+
+        const hasNonSentEmail = selectedEmails.some(
+            (email) => email.status !== "SENT"
+        );
+
+        if (hasNonSentEmail) {
+            return res.status(400).json({
+                success: false,
+                message: "Only sent emails can be deleted together."
+            });
+        }
+
+        const result = await prisma.email.deleteMany({
+            where: {
+                id: { in: uniqueIds },
+                userId: req.user.id,
+                status: "SENT"
+            }
+        });
+
+        if (result.count !== uniqueIds.length) {
+            return res.status(409).json({
+                success: false,
+                message: "Some selected emails could not be deleted."
+            });
+        }
+
+        res.json({
+            success: true,
+            deletedCount: result.count,
+            message: `${result.count} sent email${result.count === 1 ? "" : "s"} deleted from MailFlow successfully!`
+        });
+    } catch (error) {
+        console.error("Bulk email deletion failed:", error);
+
+        res.status(500).json({
+            success: false,
+            message: "Failed to delete selected emails."
+        });
+    }
+};
+
+
+export const deleteEmail = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const email = await prisma.email.findFirst({
+            where: {
+                id,
+                userId: req.user.id
+            }
+        });
+
+        if (!email) {
+            return res.status(404).json({
+                success: false,
+                message: "Email not found!"
+            });
+        }
+
+        if (email.status === "SENT" || email.status === "FAILED") {
+            await prisma.email.delete({
+                where: {
+                    id: email.id
+                }
+            });
+
+            return res.json({
+                success: true,
+                message: "Email deleted from MailFlow successfully!"
+            });
+        }
+
+        if (email.status !== "SCHEDULED") {
+            return res.status(409).json({
+                success: false,
+                message: "This email cannot be deleted because it is still being processed!"
             });
         }
 
@@ -237,6 +471,7 @@ export const updateEmail = async (req, res) => {
                 message: "Scheduled email not found!"
             });
         }
+        
 
         // Find the existing BullMQ job
         const job = await emailQueue.getJob(id);

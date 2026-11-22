@@ -103,7 +103,8 @@ emailWorker.on("failed", async (job, error) => {
                     }
                 },
                 data: {
-                    status: "FAILED"
+                    status: "FAILED",
+                    failureReason: error.message
                 }
             });
 

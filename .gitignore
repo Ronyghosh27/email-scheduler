@@ -29,3 +29,15 @@ Thumbs.db
 
 # Development tool files
 skills-lock.json
+
+# Temporary development and testing scripts
+/checkFailedJob.js
+/checkScheduledJob.js
+/cleanTestJobs.js
+/cleanupTestEmails.js
+/testQueue.js
+/testRedis.js
+/testWorker.js
+
+/backend/checkSessionTable.js
+/backend/createTestUser.js
