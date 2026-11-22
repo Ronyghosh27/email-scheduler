@@ -10,6 +10,7 @@ import pg from "pg";
 import connectPgSimple from "connect-pg-simple";
 import gmailRoutes from "./routes/gmailRoutes.js";
 import cors from "cors";
+// import "./workers/emailWorker.js";
 
 const { Pool } = pg;
 
@@ -120,7 +121,8 @@ async function startServer() {
         await prisma.$connect();
 
         console.log("PostgreSQL connected successfully!");
-
+await import("./workers/emailWorker.js");
+console.log("Email worker started successfully!");
         app.listen(PORT, () => {
             console.log(`Server is running on port ${PORT}`);
         });
